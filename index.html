@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#e987b4">
+
+    <title>Une lettre pour toi ♡</title>
+
+    <style>
+        :root {
+            --rose: #e875a8;
+            --rose-clair: #ffe8f2;
+            --rose-fonce: #a52f64;
+            --texte: #702744;
+            --blanc: #fffafd;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: Georgia, "Times New Roman", serif;
+            color: var(--texte);
+            background-color: #f3b0cd;
+            background-image:
+                linear-gradient(
+                    rgba(255, 221, 239, 0.15),
+                    rgba(169, 37, 91, 0.12)
+                ),
+                url("./fond-rose.jpg");
+            background-position: center;
+            background-size: cover;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            overflow-x: hidden;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        #musicToggle {
+            position: fixed;
+            top: 14px;
+            right: 14px;
+            z-index: 100;
+            padding: 11px 15px;
+            border: 1px solid #eab2cd;
+            border-radius: 30px;
+            background: rgba(255, 250, 253, 0.95);
+            color: var(--rose-fonce);
+            font: 12px Arial, sans-serif;
+        }
+
+        main {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 75px 15px 30px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 760px;
+            padding: clamp(25px, 5vw, 45px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            border-radius: 25px;
+            background: rgba(255, 249, 252, 0.92);
+            box-shadow: 0 25px 80px rgba(102, 26, 59, 0.22);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: relative;
+            z-index: 1;
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: 9px;
+            border: 1px solid rgba(212, 99, 150, 0.3);
+            border-radius: 18px;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .page {
+            display: none;
+            animation: apparition 0.6s ease both;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes apparition {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .eyebrow {
+            text-align: center;
+            font: 11px Arial, sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #a74b77;
+        }
+
+        h1 {
+            color: #a02e61;
+            text-align: center;
+            font-size: clamp(32px, 7vw, 49px);
+            font-weight: normal;
+            line-height: 1.2;
+            margin: 20px 0;
+        }
+
+        h2 {
+            color: #a02e61;
+            font-size: 24px;
+            font-weight: normal;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .subtitle {
+            max-width: 530px;
+            margin: 0 auto 22px;
+            text-align: center;
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        .heart {
+            color: #d65b91;
+            font-size: 25px;
+            letter-spacing: 8px;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .small {
+            margin-top: 20px;
+            text-align: center;
+            font: 12px/1.7 Arial, sans-serif;
+            color: #94516f;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 26px;
+        }
+
+        .btn {
+            padding: 14px 21px;
+            border-radius: 50px;
+            border: 0;
+            font: bold 13px Arial, sans-serif;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px #a52f6425;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: wait;
+            transform: none;
+        }
+
+        .primary {
+            color: white;
+            background: linear-gradient(135deg, #e87eac, #a52f64);
+        }
+
+        .secondary {
+            color: #96335f;
+            background: white;
+            border: 1px solid #e6a5c2;
+        }
+
+        /* ENVELOPPE */
+
+        .envelope-area {
+            height: 220px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
+            margin: 15px 0;
+        }
+
+        .envelope {
+            width: 270px;
+            height: 165px;
+            position: relative;
+            cursor: pointer;
+            filter: drop-shadow(0 12px 15px #8b31552b);
+            transition: transform 0.3s;
+        }
+
+        .envelope:hover {
+            transform: translateY(-4px);
+        }
+
+        .env-back {
+            position: absolute;
+            inset: 0;
+            background: #f8c8dc;
+            border-radius: 8px;
+        }
+
+        .paper {
+            position: absolute;
+            left: 8%;
+            width: 84%;
+            height: 82%;
+            top: 8%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fffdfd;
+            border-radius: 5px;
+            color: #d65b91;
+            font-size: 40px;
+            transition: top 0.8s, transform 0.8s;
+        }
+
+        .env-front {
+            position: absolute;
+            inset: 0;
+            background: #f0a0c2;
+            clip-path: polygon(
+                0 100%, 0 0, 50% 60%, 100% 0, 100% 100%
+            );
+            border-radius: 0 0 8px 8px;
+        }
+
+        .env-flap {
+            position: absolute;
+            inset: 0;
+            background: #f8c8dc;
+            clip-path: polygon(0 0, 100% 0, 50% 63%);
+            transform-origin: top;
+            transition: transform 0.8s;
+        }
+
+        .envelope.open .env-flap {
+            transform: rotateX(180deg);
+        }
+
+        .envelope.open .paper {
+            top: -25%;
+            transform: translateY(-10px);
+        }
+
+        /* LETTRES */
+
+        .letter-text {
+            font-size: 16px;
+            line-height: 1.9;
+            text-align: left;
+            overflow-wrap: anywhere;
+        }
+
+        .letter-text p {
+            margin-bottom: 17px;
+        }
+
+        .salutation {
+            color: #a02e61;
+            font-size: 21px;
+        }
+
+        .signature {
+            margin-top: 25px;
+            text-align: right;
+            font-style: italic;
+            font-size: 21px;
+            color: #a02e61;
+        }
+
+        /* FORMULAIRES */
+
+        .lock {
+            width: 75px;
+            height: 75px;
+            margin: 25px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #ffe1ed;
+            font-size: 32px;
+        }
+
+        .form-group {
+            margin: 17px 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 14px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #e5a3c1;
+            border-radius: 12px;
+            background: white;
+            color: #702744;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #d65b91;
+            box-shadow: 0 0 0 3px #d65b911c;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .error {
+            min-height: 20px;
+            text-align: center;
+            margin-top: 12px;
+            font: 12px Arial, sans-serif;
+            color: #b42354;
+        }
+
+        /* ROSES ANIMÉES */
+
+        .rose {
+            position: fixed;
+            top: -45px;
+            z-index: 0;
+            pointer-events: none;
+            user-select: none;
+            animation: roseFly linear forwards;
+        }
+
+        @keyframes roseFly {
+            0% {
+                transform: translate3d(0, -5vh, 0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.9;
+            }
+
+            90% {
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translate3d(var(--drift), 110vh, 0)
+                    rotate(var(--rotation));
+                opacity: 0;
+            }
+        }
+
+        /* INVITATION */
+
+        .invitation-box {
+            padding: 20px;
+            border: 1px solid #f0c1d6;
+            background: #fff7fb;
+            border-radius: 18px;
+            margin-top: 22px;
+        }
+
+        .choice {
+            min-width: 130px;
+        }
+
+        #noMessage {
+            margin-top: 22px;
+            text-align: center;
+            line-height: 1.8;
+            color: #8b3159;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+
+        .thanks {
+            text-align: center;
+            line-height: 1.9;
+            padding: 10px 0;
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                padding: 30px 21px;
+            }
+
+            .letter-text {
+                font-size: 15px;
+                line-height: 1.85;
+            }
+
+            .envelope {
+                width: 240px;
+                height: 145px;
+            }
+
+            .btn {
+                padding: 13px 17px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<button id="musicToggle" type="button">
+    ♫ Activer la musique
+</button>
+
+<audio id="music" loop preload="none">
+    <source src="./musique.mp3.m4a" type="audio/mp4">
+</audio>
+
+<main>
+<section class="card">
+<div class="content">
+
+    <!-- PAGE 1 : ENVELOPPE -->
+
+    <div class="page active" id="page1">
+
+        <div class="eyebrow">Une lettre que je te devais</div>
+
+        <h1>Quelques mots<br>du fond du cœur</h1>
+
+        <p class="subtitle">
+            Il y a des mots que l'on garde trop longtemps
+            en soi. Aujourd'hui, j'ai décidé de ne plus
+            laisser le silence parler à ma place.
+        </p>
+
+        <div class="envelope-area">
+            <div class="envelope" id="envelope"
+                 role="button" tabindex="0"
+                 aria-label="Ouvrir la lettre">
+
+                <div class="env-back"></div>
+                <div class="paper">♡</div>
+                <div class="env-front"></div>
+                <div class="env-flap"></div>
+
+            </div>
+        </div>
+
+        <p class="small">Une lettre écrite avec le cœur…</p>
+
+        <div class="buttons">
+            <button class="btn primary" id="openLetter">
+                Ouvrir ma lettre ♡
+            </button>
+        </div>
+
+    </div>
+
+
+    <!-- PAGE 2 : EXCUSES -->
+
+    <div class="page" id="page2">
+
+        <div class="eyebrow">01 · Mes excuses</div>
+
+        <div class="heart">♡ ♡ ♡</div>
+
+        <h1>Je te demande pardon</h1>
+
+        <div class="letter-text">
+
+            <p class="salutation">
+                À toi, qui mérites toute ma sincérité…
+            </p>
+
+            <p>
+                Avant de te parler de mes sentiments, je veux
+                commencer par te demander pardon. Pardon
+                d'avoir attendu aussi longtemps pour te dire
+                ce que je ressentais.
+            </p>
+
+            <p>
+                Je comprends tes doutes. À ta place, moi aussi,
+                je me poserais des questions. Quand quelqu'un
+                tarde à parler, il est normal de se demander
+                si ses sentiments sont réellement sincères.
+            </p>
+
+            <p>
+                Peut-être que ma manière d'agir t'a donné
+                une image de moi qui ne correspond pas à
+                ce que je ressens aujourd'hui. Je ne peux
+                pas effacer mon silence ni revenir en arrière.
+                Je peux seulement reconnaître mon erreur.
+            </p>
+
+            <p>
+                Je suis désolé si j'ai créé des incertitudes
+                là où j'aurais dû être honnête. Tu méritais
+                de la clarté, pas des questions sans réponse.
+            </p>
+
+            <p>
+                Je ne t'écris pas pour te forcer à me pardonner,
+                ni pour te mettre une pression. Je veux
+                simplement te parler avec sincérité et te
+                laisser la liberté de comprendre ce que
+                je ressens à ton rythme.
+            </p>
+
+            <p>
+                Je sais que de belles paroles ne suffisent pas.
+                Si tu m'en laisses la possibilité, je préfère
+                te montrer ma sincérité par mes actes,
+                avec patience, respect et constance.
+            </p>
+
+        </div>
+
+        <div class="signature">Avec sincérité. ♡</div>
+
+        <div class="buttons">
+            <button class="btn secondary" onclick="showPage('page1')">
+                ← Retour
+            </button>
+
+            <button
