@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#e9a0c0">
+
+<title>Une lettre pour toi ♡</title>
+
+<!-- Polices calligraphiques -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ========================================
+   01. VARIABLES ET RÉINITIALISATION
+======================================== */
+
+:root {
+    --rose-pale: #fff0f6;
+    --rose: #e8a0c0;
+    --rose-fonce: #b53d70;
+    --bordeaux: #762546;
+    --texte: #682b46;
+    --blanc: #fffafd;
+    --or: #c99b61;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: "Dancing Script", cursive;
+    font-weight: 700;
+    color: var(--texte);
+
+    background:
+        linear-gradient(
+            rgba(255, 224, 239, 0.22),
+            rgba(139, 34, 79, 0.12)
+        ),
+        url("./fond-rose.jpg") center / cover fixed no-repeat;
+
+    overflow-x: hidden;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: "Dancing Script", cursive;
+    font-weight: 700;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--rose-fonce);
+    outline-offset: 3px;
+}
+
+/* ========================================
+   02. FOND ET CARTE PRINCIPALE
+======================================== */
+
+.background-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: rgba(255, 235, 244, 0.12);
+    pointer-events: none;
+}
+
+main {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 75px 15px 35px;
+}
+
+.card {
+    position: relative;
+    width: 100%;
+    max-width: 780px;
+    padding: clamp(28px, 6vw, 55px);
+
+    background: rgba(255, 249, 252, 0.91);
+
+    border: 1px solid rgba(255, 255, 255, 0.95);
+    border-radius: 28px;
+
+    box-shadow:
+        0 25px 80px rgba(93, 24, 54, 0.23),
+        inset 0 0 35px rgba(255, 255, 255, 0.3);
+
+    backdrop-filter: blur(13px);
+    -webkit-backdrop-filter: blur(13px);
+
+    z-index: 2;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 10px;
+    border: 1px solid rgba(201, 155, 97, 0.55);
+    border-radius: 21px;
+    pointer-events: none;
+}
+
+.content {
+    position: relative;
+    z-index: 3;
+}
+
+/* ========================================
+   03. TYPOGRAPHIE
+======================================== */
+
+.eyebrow {
+    text-align: center;
+    font-family: "Playfair Display", serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rose-fonce);
+}
+
+h1 {
+    font-family: "Great Vibes", cursive;
+    font-weight: normal;
+    font-size: clamp(45px, 9vw, 72px);
+    line-height: 1.25;
+    text-align: center;
+    color: var(--rose-fonce);
+    margin: 20px 0;
+}
+
+h2 {
+    font-family: "Dancing Script", cursive;
+    font-weight: 700;
+    font-size: 32px;
+    text-align: center;
+    color: var(--rose-fonce);
+    margin: 20px 0;
+}
+
+.subtitle {
+    max-width: 550px;
+    margin: 0 auto 24px;
+    text-align: center;
+    font-size: clamp(19px, 4vw, 24px);
+    line-height: 1.7;
+}
+
+.heart {
+    text-align: center;
+    font-size: 27px;
+    color: var(--rose-fonce);
+    letter-spacing: 8px;
+    margin: 18px 0;
+}
+
+.small {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 17px;
+    line-height: 1.6;
+    color: #985574;
+}
+
+.page {
+    display: none;
+    animation: pageReveal 0.75s ease both;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes pageReveal {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========================================
+   04. ENVELOPPE ROMANTIQUE
+======================================== */
+
+.envelope-area {
+    height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1200px;
+    margin: 10px 0;
+}
+
+.envelope {
+    position: relative;
+    width: min(310px, 80vw);
+    height: 190px;
+    cursor: pointer;
+
+    filter: drop-shadow(
+        0 18px 18px rgba(118, 37, 70, 0.19)
+    );
+
+    transition: transform 0.4s;
+}
+
+.envelope:hover {
+    transform: translateY(-5px);
+}
+
+.envelope-back {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        135deg,
+        #f9d8e6,
+        #e9a1c1
+    );
+    border-radius: 10px;
+}
+
+.envelope-paper {
+    position: absolute;
+    top: 7%;
+    left: 8%;
+    width: 84%;
+    height: 84%;
+
+    background: #fffdfd;
+    border-radius: 5px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 55px;
+    color: var(--rose-fonce);
+
+    box-shadow: 0 2px 8px rgba(118, 37, 70, 0.12);
+
+    transition:
+        top 1s ease,
+        transform 1s ease;
+}
+
+.envelope-front {
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        145deg,
+        #f4b5cf,
+        #e99abb
+    );
+
+    clip-path: polygon(
+        0 100%,
+        0 0,
+        50% 60%,
+        100% 0,
+        100% 100%
+    );
+
+    border-radius: 0 0 10px 10px;
+}
+
+.envelope-flap {
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        135deg,
+        #ffe5ef,
+        #f4b5cf
+    );
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        50% 64%
+    );
+
+    transform-origin: top;
+    transition: transform 0.9s ease;
+}
+
+.envelope.open .envelope-flap {
+    transform: rotateX(180deg);
+}
+
+.envelope.open .envelope-paper {
+    top: -30%;
+    transform: translateY(-12px);
+}
+
+.seal {
+    position: absolute;
+    left: 50%;
+    top: 52%;
+    transform: translate(-50%, -50%);
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: radial-gradient(
+        circle at 35% 30%,
+        #eeb7cf,
+        #a72f62
+    );
+
+    color: white;
+    font-size: 28px;
+
+    border: 2px solid #f8dfb8;
+
+    box-shadow: 0 4px 12px rgba(118, 37, 70, 0.2);
+
+    z-index: 4;
+
+    transition: opacity 0.4s;
+}
+
+.envelope.open .seal {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ========================================
+   05. TEXTE DES LETTRES
+======================================== */
+
+.letter-text {
+    font-family: "Dancing Script", cursive;
+    font-weight: 700;
+    font-size: clamp(20px, 4vw, 24px);
+    line-height: 1.8;
+    text-align: left;
+    overflow-wrap: anywhere;
+}
+
+.letter-text p {
+    margin-bottom: 20px;
+}
+
+.salutation {
+    font-size: clamp(25px, 5vw, 31px);
+    color: var(--rose-fonce);
+}
+
+.signature {
+    margin-top: 30px;
+    text-align: right;
+    font-family: "Great Vibes", cursive;
+    font-size: clamp(31px, 6vw, 43px);
+    color: var(--rose-fonce);
+}
+
+/* ========================================
+   06. BOUTONS
+======================================== */
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 13px;
+    margin-top: 30px;
+}
+
+.btn {
+    padding: 14px 24px;
+    border-radius: 50px;
+    border: none;
+
+    font-size: 21px;
+    line-height: 1.2;
+
+    transition:
+        transform 0.25s,
+        box-shadow 0.25s;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 10px 25px rgba(165, 47, 100, 0.18);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+
+.primary {
+    color: white;
+
+    background: linear-gradient(
+        135deg,
+        #e98bb6,
+        #a52f64
+    );
+
+    box-shadow: 0 8px 20px rgba(165, 47, 100, 0.15);
+}
+
+.secondary {
+    color: var(--rose-fonce);
+    background: white;
+    border: 1px solid #e6a5c2;
+}
+
+/* ========================================
+   07. MOT DE PASSE
+======================================== */
+
+.lock {
+    width: 82px;
+    height: 82px;
+
+    margin: 25px auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: linear-gradient(
+        135deg,
+        #fff0f6,
+        #f3bfd5
+    );
+
+    color: var(--rose-fonce);
+    font-size: 37px;
+
+    box-shadow: 0 8px 25px rgba(165, 47, 100, 0.12);
+}
+
+.form-group {
+    margin: 20px 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 21px;
+    line-height: 1.5;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 15px;
+
+    border: 1px solid #e5a3c1;
+    border-radius: 13px;
+
+    background: white;
+    color: var(--texte);
+
+    font-size: 20px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--rose-fonce);
+    box-shadow: 0 0 0 3px rgba(214, 91, 145, 0.12);
+    outline: none;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 95px;
+}
+
+.error {
+    min-height: 24px;
+    margin-top: 12px;
+
+    color: #b42354;
+    text-align: center;
+    font-size: 19px;
+}
+
+/* ========================================
+   08. ROSES FLOTTANTES
+======================================== */
+
+#rose-container {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+
+    overflow: hidden;
+    pointer-events: none;
+
+    z-index: 10;
+}
+
+.rose {
+    position: absolute;
+    top: -60px;
+
+    display: block;
+
+    line-height: 1;
+    opacity: 0;
+
+    will-change: transform, opacity;
+
+    animation: roseFall linear forwards;
+
+    filter: drop-shadow(
+        0 3px 5px rgba(160, 35, 85, 0.2)
+    );
+}
+
+@keyframes roseFall {
+    0% {
+        transform: translate3d(0, -5vh, 0) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    50% {
+        transform:
+            translate3d(var(--drift), 50vh, 0)
+            rotate(180deg);
+
+        opacity: 0.95;
+    }
+
+    90% {
+        opacity: 0.85;
+    }
+
+    100% {
+        transform:
+            translate3d(var(--drift-end), 110vh, 0)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+}
+
+/* ========================================
+   09. INVITATION
+======================================== */
+
+.invitation-box {
+    padding: 24px;
+
+    border: 1px solid #efbfd5;
+    border-radius: 18px;
+
+    background: rgba(255, 247, 251, 0.9);
+
+    margin-top: 25px;
+}
+
+.choice {
+    min-width: 150px;
+}
+
+#noMessage {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 22px;
+    line-height: 1.7;
+    color: var(--bordeaux);
+}
+
+#noMessage[hidden],
+[hidden] {
+    display: none !important;
+}
+
+.status {
+    margin-top: 18px;
+    text-align: center;
+    font-size: 19px;
+    line-height: 1.6;
+}
+
+/* ========================================
+   10. CONTRÔLE MUSIQUE
+======================================== */
+
+#musicToggle {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 100;
+
+    padding: 12px 17px;
+
+    border: 1px solid #e5a3c1;
+    border-radius: 50px;
+
+    background: rgba(255, 250, 253, 0.95);
+    color: var(--rose-fonce);
+
+    font-size: 18px;
+}
+
+/* ========================================
+   11. RESPONSIVE
+======================================== */
+
+@media (max-width: 550px) {
+    .card {
+        padding: 30px 21px;
+        border-radius: 23px;
+    }
+
+    .letter-text {
+        font-size: 20px;
+        line-height: 1.8;
+    }
+
+    .envelope {
+        width: 240px;
+        height: 150px;
+    }
+
+    .envelope-area {
+        height: 230px;
+    }
+
+    .btn {
+        padding: 13px 18px;
+        font-size: 19px;
+    }
+
+    .buttons {
+        gap: 10px;
+    }
+
+    .eyebrow {
+        letter-spacing: 2px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="background-overlay"></div>
+
+<div id="rose-container" aria-hidden="true"></div>
+
+<button id="musicToggle" type="button">
+    ♫ Écouter la musique
+</button>
+
+<audio id="music" loop preload="none">
+    <source src="./musique.mp3.m4a" type="audio/mp4">
+</audio>
+
+<main>
+
+<section class="card">
+<div class="content">
+
+<!-- ====================================
+     PAGE 1 : LETTRE D'OUVERTURE
+==================================== -->
+
+<div class="page active" id="page1">
+
+    <div class="eyebrow">
+        Une lettre écrite pour toi
+    </div>
+
+    <h1>
+        Quelques mots<br>
+        du fond du cœur
+    </h1>
+
+    <p class="subtitle">
+        Il existe des mots que l'on garde trop longtemps
+        en soi. Aujourd'hui, j'ai choisi de laisser mon
+        cœur parler, avec toute la sincérité que tu mérites.
+    </p>
+
+    <div class="envelope-area">
+
+        <div class="envelope"
+             id="envelope"
+             role="button"
+             tabindex="0"
+             aria-label="Ouvrir la lettre">
+
+            <div class="envelope-back"></div>
+
+            <div class="envelope-paper">
+                ♡
+            </div>
+
+            <div class="envelope-front"></div>
+
+            <div class="envelope-flap"></div>
+
+            <div class="seal">
+                ♥
+            </div>
+
+        </div>
+
+    </div>
+
+    <p class="small">
+        Une lettre, quelques vérités et beaucoup de sincérité…
+    </p>
+
+    <div class="buttons">
+
+        <button class="btn primary" id="openLetter">
+            Ouvrir ma lettre ♡
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ====================================
+     PAGE 2 : EXCUSES
+==================================== -->
+
+<div class="page" id="page2">
+
+    <div class="eyebrow">
+        Première lettre · Mes excuses
+    </div>
+
+    <div class="heart">♡ ♡ ♡</div>
+
+    <h1>Je te demande pardon</h1>
+
+    <div class="letter-text">
+
+        <p class="salutation">
+            À toi, qui mérites toute ma sincérité…
+        </p>
+
+        <p>
+            Avant de te parler de mes sentiments, je veux
+            te demander pardon d'avoir attendu aussi
+            longtemps pour te dire ce que je ressentais.
+        </p>
+
+        <p>
+            Je comprends tes doutes. À ta place, moi aussi,
+            je me poserais des questions. Quand quelqu'un
+            tarde à parler, il est normal de se demander
+            si ses sentiments sont vraiment sincères.
+        </p>
+
+        <p>
+            Je suis désolé si mon silence t'a donné une
+            mauvaise impression ou si mes hésitations
+            t'ont fait douter de ma sincérité.
+            Tu méritais de la clarté, pas des questions
+            sans réponse.
+        </p>
+
+        <p>
+            Je ne t'écris pas pour te forcer à me pardonner
+            ni pour te mettre une pression. Je veux
+            simplement être honnête avec toi et assumer
+            le fait que j'aurais dû parler plus tôt.
+        </p>
+
+        <p>
+            Je sais que les belles paroles ne suffisent pas.
+            Si tu m'en laisses la possibilité, je préfère
+            te montrer ma sincérité par mes actes,
+            avec patience, respect et constance.
+        </p>
+
+    </div>
+
+    <div class="signature">
+        Avec sincérité. ♡
+    </div>
+
+    <div class="buttons">
+
+        <button class="btn secondary" onclick="showPage('page1')">
+            ← Retour
+        </button>
+
+        <button class="btn primary" onclick="showPage('page3')">
+            Continuer ♡
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ====================================
+     PAGE 3 : CODE SECRET
+==================================== -->
+
+<div class="page" id="page3">
+
+    <div class="eyebrow">
+        Un petit souvenir à partager
+    </div>
+
+    <div class="lock">
+        ♡
+    </div>
+
+    <h1>Une date importante</h1>
+
+    <p class="subtitle">
+        Pour découvrir la suite de cette lettre,
+        entre la date du jour où tu es arrivée
+        au monde. 🌹
+    </p>
+
+    <form id="birthForm">
+
+        <div class="form-group">
+
+            <label for="birthdate">
+                Quelle est ta date de naissance ?
+            </label>
+
+            <input
+                type="date"
+                id="birthdate"
+                required
+            >
+
+        </div>
+
+        <div class="error"
+             id="dateError"
+             aria-live="polite"></div>
+
+        <div class="buttons">
+
+            <button type="button"
+                    class="btn secondary"
+                    onclick="showPage('page2')">
+                ← Retour
+            </button>
+
+            <button type="submit" class="btn primary">
+                Déverrouiller ♡
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<!-- ====================================
+     PAGE 4 : DÉCLARATION D'AMOUR
+==================================== -->
+
+<div class="page" id="page4">
+
+    <div class="eyebrow">
+        Deuxième lettre · Mon cœur
+    </div>
+
+    <div class="heart">♡</div>
+
+    <h1>Tu es mon exception</h1>
+
+    <div class="letter-text">
+
+        <p class="salutation">
+            Je veux que tu comprennes une chose…
+        </p>
+
+        <p>
+            Je sais que je n'ai peut-être pas la tête
+            de quelqu'un qui veut du sérieux. Mais
+            avec toi, c'est différent.
+            <strong>Avec toi, c'est l'exception.</strong>
+        </p>
+
+        <p>
+            Si mes intentions n'étaient pas sincères,
+            je ne serais probablement pas resté là,
+            à continuer de te parler et à chercher
+            une place auprès de toi.
+        </p>
+
+        <p>
+            <strong>Je t'aime profondément.</strong>
+            Tu as une place particulière dans mon cœur,
+            et j'aimerais avoir la chance de construire
+            quelque chose de vrai avec toi.
+        </p>
+
+        <p>
+            Je comprends tes hésitations. Je ne te demande
+            pas de me croire aveuglément : je voudrais
+            simplement te prouver mes sentiments avec
+            le temps, par mes actes, mon respect et
+            ma sincérité.
+        </p>
+
+        <p>
+            Je ne veux pas te forcer à m'aimer.
+            Je veux seulement que tu saches que,
+            parmi toutes les personnes que j'aurais
+            pu rencontrer, c'est auprès de toi que
+            j'aimerais essayer quelque chose de sérieux.
+        </p>
+
+    </div>
+
+    <div class="signature">
+        Du fond de mon cœur, à toi. ♡
+    </div>
+
+    <div class="buttons">
+
+        <button class="btn secondary" onclick="showPage('page3')">
+            ← Retour
+        </button>
+
+        <button class="btn primary" onclick="showPage('page5')">
+            J'aimerais te proposer quelque chose →
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ====================================
+     PAGE 5 : INVITATION
+==================================== -->
+
+<div class="page" id="page5">
+
+    <div class="eyebrow">
+        Une petite invitation
+    </div>
+
+    <div class="heart">🌹 ♡ 🌹</div>
+
+    <h1>J'aimerais te voir…</h1>
+
+    <div class="letter-text">
+
+        <p>
+            Je ne sais pas si tu découvriras ce message
+            aujourd'hui, vendredi, ou demain, samedi.
+        </p>
+
+        <p>
+            Mais j'aimerais vraiment passer la journée
+            avec toi, si tu es d'accord.
+        </p>
+
+        <p>
+            Pas pour te mettre la pression, mais simplement
+            pour qu'on puisse se retrouver, parler, rire
+            et profiter d'un moment ensemble.
+        </p>
+
+        <p>
+            <strong>
+                Alors, accepterais-tu de passer cette
+                journée avec moi ?
+            </strong>
+        </p>
+
+    </div>
+
+    <div class="buttons">
+
+        <button class="btn primary choice" id="yesBtn">
+            Oui, avec plaisir ❤️
+        </button>
+
+        <button class="btn secondary choice" id="noBtn">
+            Non, pas cette fois
+        </button>
+
+    </div>
+
+    <div id="noMessage" hidden>
+
+        <p>
+            Je comprends et je respecte ton choix. 💗
+        </p>
+
+        <p>
+            Si tu hésites simplement parce que tu n'es
+            pas disponible, tu peux me le dire.
+            Mais ne te sens pas obligée d'accepter.
+        </p>
+
+        <div class="buttons">
+
+            <button class="btn primary" id="reconsiderBtn">
+                Finalement, je veux choisir un horaire
+            </button>
+
+            <button class="btn secondary" id="keepNoBtn">
+                Je préfère maintenir mon choix
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ====================================
+     PAGE 6 : CHOIX DU JOUR ET DE L'HEURE
+==================================== -->
+
+<div class="page" id="page6">
+
+    <div class="eyebrow">
+        Notre rendez-vous
+    </div>
+
+    <div class="heart">♡ 🌹 ♡</div>
+
+    <h1>À quelle heure ?</h1>
+
+    <p class="subtitle">
+        Choisis le jour et l'heure qui t'arrangent
+        le mieux. ♡
+    </p>
+
+    <form id="meetingForm">
+
+        <div class="form-group">
+
+            <label for="meetingDay">
+                Quel jour préfères-tu ?
+            </label>
+
+            <select id="meetingDay" name="jour" required>
+
+                <option value="">Choisir un jour</option>
+
+                <option value="Vendredi">
+                    Vendredi
+                </option>
+
+                <option value="Samedi">
+                    Samedi
+                </option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="meetingTime">
+                À quelle heure ?
+            </label>
+
+            <select id="meetingTime" name="horaire" required>
+
+                <option value="">Choisir un horaire</option>
+
+                <option value="10h00">10 h 00</option>
+                <option value="11h00">11 h 00</option>
+                <option value="12h00">12 h 00</option>
+                <option value="13h00">13 h 00</option>
+                <option value="14h00">14 h 00</option>
+                <option value="15h00">15 h 00</option>
+                <option value="16h00">16 h 00</option>
+
+            </select>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="meetingComment">
+                Un petit mot, si tu le souhaites…
+            </label>
+
+            <textarea
+                id="meetingComment"
+                rows="3"
+                placeholder="Ton idée pour cette journée…"></textarea>
+
+        </div>
+
+        <div class="buttons">
+
+            <button type="button"
+                    class="btn secondary"
+                    onclick="showPage('page5')">
+                ← Retour
+            </button>
+
+            <button type="submit" class="btn primary">
+                Confirmer mon choix ♡
+            </button>
+
+        </div>
+
+    </form>
+
+    <p id="meetingStatus" class="status" aria-live="polite"></p>
+
+</div>
+
+
+<!-- ====================================
+     PAGE 7 : QUESTIONS PERSONNELLES
+==================================== -->
+
+<div class="page" id="page7">
+
+    <div class="eyebrow">
+        Quelques questions sincères
+    </div>
+
+    <div class="heart">♡</div>
+
+    <h1>J'aimerais te comprendre</h1>
+
+    <p class="subtitle">
+        Réponds avec tes propres mots.
+        Tu n'as pas besoin de me dire ce que je veux entendre.
+    </p>
+
+    <form id="answersForm">
+
+        <div class="form-group">
+
+            <label for="feelings">
+                1. Est-ce que tu as déjà ressenti quelque chose pour moi ?
+            </label>
+
+            <textarea
+                id="feelings"
+                name="sentiments"
+                rows="3"
+                required></textarea>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="loved">
+                2. Est-ce que tu m'as aimé un jour, même un peu ?
+            </label>
+
+            <textarea
+                id="loved"
+                name="amour_passe"
+                rows="3"
+                required></textarea>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="doubts">
+                3. Qu'est-ce qui te fait douter de mes sentiments ?
+            </label>
+
+            <textarea
+                id="doubts"
+                name="doutes"
+                rows="3"
+                required></textarea>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="future">
+                4. Pourrais-tu envisager quelque chose de sérieux avec moi ?
+            </label>
+
+            <textarea
+                id="future"
+                name="avenir"
+                rows="3"
+                required></textarea>
+
+        </div>
+
+        <div class="form-group">
+
+            <label for="advice">
+                5. Qu'aimerais-tu que je comprenne de tes sentiments ?
+            </label>
+
+            <textarea
+                id="advice"
+                name="avis_personnel"
+                rows="4"
+                required></textarea>
+
+        </div>
+
+        <div class="buttons">
+
+            <button type="button"
+                    class="btn secondary"
+                    onclick="showPage('page5')">
+                ← Retour
+            </button>
+
+            <button type="submit"
+                    class="btn primary"
+                    id="sendAnswers">
+                Envoyer mes réponses ♡
+            </button>
+
+        </div>
+
+    </form>
+
+    <p id="formStatus" class="status" aria-live="polite"></p>
+
+</div>
+
+
+<!-- ====================================
+     PAGE 8 : FIN
+==================================== -->
+
+<div class="page" id="page8">
+
+    <div class="heart">♡ 🌹 ♡</div>
+
+    <div class="eyebrow">
+        Merci d'avoir pris le temps
+    </div>
+
+    <h1>Merci pour ta sincérité</h1>
+
+    <div class="subtitle">
+
+        <p>
+            Peu importe ta réponse, je voulais que tu
+            connaisses ce que je ressens réellement.
+        </p>
+
+        <br>
+
+        <p>
+            Je ne te demande pas une histoire parfaite.
+            Je voulais simplement être honnête avec toi.
+        </p>
+
+        <br>
+
+        <p>
+            Prends le temps dont tu as besoin. ❤️
+        </p>
+
+    </div>
+
+</div>
+
+</div>
+</section>
+</main>
+
+
+<script>
+"use strict";
+
+/* ========================================
+   01. CONFIGURATION
+======================================== */
+
+const FORMSPREE_URL = "https://formspree.io/f/xpqvkbyb";
+
+const music = document.getElementById("music");
+const musicToggle = document.getElementById("musicToggle");
+const envelope = document.getElementById("envelope");
+const roseContainer = document.getElementById("rose-container");
+
+let rosesStarted = false;
+let opening = false;
+
+
+/* ========================================
+   02. NAVIGATION ENTRE LES PAGES
+======================================== */
+
+function showPage(pageId) {
+    const target = document.getElementById(pageId);
+
+    if (!target) {
+        console.error("Page introuvable :", pageId);
+        return;
+    }
+
+    document.querySelectorAll(".page").forEach(function(page) {
+        page.classList.remove("active");
+    });
+
+    target.classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* ========================================
+   03. MUSIQUE
+======================================== */
+
+async function startMusic() {
+    try {
+        await music.play();
+        musicToggle.textContent = "♫ Musique activée";
+    } catch (error) {
+        musicToggle.textContent = "♫ Appuie pour écouter";
+        console.warn("Lecture audio impossible :", error);
+    }
+}
+
+musicToggle.addEventListener("click", async function() {
+    if (music.paused) {
+        await startMusic();
+    } else {
+        music.pause();
+        musicToggle.textContent = "♫ Reprendre la musique";
+    }
+});
+
+
+/* ========================================
+   04. ROSES QUI FLOTTENT
+======================================== */
+
+function createRose() {
+    const rose = document.createElement("span");
+
+    rose.className = "rose";
+
+    const flowers = [
+        "🌹",
+        "🌹",
+        "🌹",
+        "🌸",
+        "🌺",
+        "🌷",
+        "💗",
+        "💕"
+    ];
+
+    rose.textContent =
+        flowers[Math.floor(Math.random() * flowers.length)];
+
+    rose.style.left = Math.random() * 100 + "vw";
+
+    rose.style.fontSize =
+        (20 + Math.random() * 23) + "px";
+
+    rose.style.setProperty(
+        "--drift",
+        (Math.random() * 160 - 80) + "px"
+    );
+
+    rose.style.setProperty(
+        "--drift-end",
+        (Math.random() * 160 - 80) + "px"
+    );
+
+    const duration = 7 + Math.random() * 6;
+
+    rose.style.animationDuration = duration + "s";
+
+    roseContainer.appendChild(rose);
+
+    setTimeout(function() {
+        rose.remove();
+    }, duration * 1000 + 200);
+}
+
+function startRoses() {
+    if (rosesStarted) return;
+
+    rosesStarted = true;
+
+    for (let i = 0; i < 12; i++) {
+        setTimeout(createRose, i * 150);
+    }
+
+    setInterval(createRose, 450);
+}
+
+
+/* ========================================
+   05. OUVERTURE DE L'ENVELOPPE
+======================================== */
+
+function openEnvelope() {
+    if (opening) return;
+
+    opening = true;
+
+    envelope.classList.add("open");
+
+    startMusic();
+    startRoses();
+
+    setTimeout(function() {
+        showPage("page2");
+        opening = false;
+    }, 850);
+}
+
+envelope.addEventListener("click", openEnvelope);
+
+envelope.addEventListener("keydown", function(event) {
+    if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        openEnvelope();
+    }
+});
+
+document.getElementById("openLetter")
+    .addEventListener("click", openEnvelope);
+
+
+/* ========================================
+   06. DATE DE NAISSANCE
+======================================== */
+
+document.getElementById("birthForm")
+    .addEventListener("submit", function(event) {
+        event.preventDefault();
+
+        const date = document.getElementById("birthdate").value;
+        const error = document.getElementById("dateError");
+
+        if (date === "2007-10-04") {
+            error.textContent = "";
+            showPage("page4");
+        } else {
+            error.textContent =
+                "Ce n'est pas la bonne date. Réessaie doucement ♡";
+        }
+    });
+
+
+/* ========================================
+   07. ENVOI VERS FORMSPREE
+======================================== */
+
+async function sendToFormspree(data) {
+    const response = await fetch(FORMSPREE_URL, {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+
+    if (!response.ok) {
+        throw new Error("Erreur HTTP " + response.status);
+    }
+
+    return response;
+}
+
+
+/* ========================================
+   08. INVITATION
+======================================== */
+
+document.getElementById("yesBtn")
+    .addEventListener("click", function() {
+        document.getElementById("noMessage").hidden = true;
+        showPage("page6");
+    });
+
+document.getElementById("noBtn")
+    .addEventListener("click", function() {
+        document.getElementById("noMessage").hidden = false;
+    });
+
+document.getElementById("reconsiderBtn")
+    .addEventListener("click", function() {
+        document.getElementById("noMessage").hidden = true;
+        showPage("page6");
+    });
+
+document.getElementById("keepNoBtn")
+    .addEventListener("click", async function() {
+        const button = this;
+
+        button.disabled = true;
+
+        try {
+            await sendToFormspree({
+                type: "Invitation",
+                reponse: "Non, pas cette fois"
+            });
+        } catch (error) {
+            console.error("Envoi impossible :", error);
+        }
+
+        showPage("page7");
+        button.disabled = false;
+    });
+
+
+/* ========================================
+   09. CHOIX DU RENDEZ-VOUS
+======================================== */
+
+document.getElementById("meetingForm")
+    .addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const form = event.currentTarget;
+        const button = form.querySelector('[type="submit"]');
+        const status = document.getElementById("meetingStatus");
+
+        button.disabled = true;
+        status.textContent = "Envoi de ton choix…";
+
+        const data = {
+            type: "Invitation à se rencontrer",
+            reponse: "Oui",
+            jour: document.getElementById("meetingDay").value,
+            horaire: document.getElementById("meetingTime").value,
+            commentaire: document.getElementById("meetingComment").value
+        };
+
+        try {
+            await sendToFormspree(data);
+
+            status.textContent = "Ton choix a été envoyé. Merci ♡";
+
+            showPage("page7");
+
+        } catch (error) {
+            console.error(error);
+
+            status.textContent =
+                "L'envoi a échoué. Vérifie ta connexion et réessaie.";
+
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+
+/* ========================================
+   10. QUESTIONS PERSONNELLES
+======================================== */
+
+document.getElementById("answersForm")
+    .addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const form = event.currentTarget;
+        const button = document.getElementById("sendAnswers");
+        const status = document.getElementById("formStatus");
+
+        const answers = Object.fromEntries(
+            new FormData(form).entries()
+        );
+
+        button.disabled = true;
+        status.textContent = "Envoi de tes réponses…";
+
+        try {
+            await sendToFormspree({
+                type: "Réponses à la lettre",
+                ...answers
+            });
+
+            showPage("page8");
+
+        } catch (error) {
+            console.error(error);
+
+            status.textContent =
+                "Impossible d'envoyer les réponses. Vérifie ta connexion et réessaie.";
+
+        } finally {
+            button.disabled = false;
+        }
+    });
+
+</script>
+
+</body>
+</html>
